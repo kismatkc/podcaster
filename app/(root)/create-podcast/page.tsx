@@ -84,7 +84,6 @@ const CreatePodcast = () => {
 
         // Parse the JSON response
         const data = await response.json();
-        const newData = data.voices.splice(0,5).map(({name,ssmlGender}:{name: string,ssmlGender: string})=>({name: name,gender:ssmlGender}))
 
 
 

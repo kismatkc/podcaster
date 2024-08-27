@@ -16,33 +16,34 @@ export const sidebarLinks = [
   },
 ];
 
-
 export const voiceDetails = [
   {
-    id: 1,
-    name: "alloy",
+      "name": "af-ZA-Standard-A",
+      "gender": "FEMALE"  ,id: 1,
   },
   {
-    id: 2,
-    name: "echo",
+      "name": "am-ET-Standard-A",
+      "gender": "FEMALE",
+      id: 2,
   },
   {
-    id: 3,
-    name: "fable",
+      "name": "am-ET-Standard-B",
+      "gender": "MALE",
+      id: 3
   },
   {
-    id: 4,
-    name: "onyx",
+      "name": "am-ET-Wavenet-A",
+      "gender": "FEMALE",
+      id:4
   },
   {
-    id: 5,
-    name: "nova",
-  },
-  {
-    id: 6,
-    name: "shimmer",
-  },
-];
+      "name": "am-ET-Wavenet-B",
+      "gender": "MALE",
+      id: 5
+  }
+]
+
+
 
 export const podcastData = [
   {

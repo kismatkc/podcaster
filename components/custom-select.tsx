@@ -15,8 +15,8 @@ export default function CustomSelect({voices,value,setValue}:{voices: {id: numbe
   const [voiceSelected, setVoiceSelected] = React.useState<string>("")
   React.useEffect(() => {
     if(voiceSelected){
-    const audio = new Audio(`/${voiceSelected}.mp3`);
-    audio.play();
+   const audio = new Audio(`/${voiceSelected}.mp3`);
+   audio.play();
     }
   }, [voiceSelected])
   return (

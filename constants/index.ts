@@ -19,27 +19,27 @@ export const sidebarLinks = [
 export const voiceDetails = [
   {
       "name": "af-ZA-Standard-A",
-      "gender": "FEMALE"  ,id: 1,
+      "gender": "FEMALE"  ,id: 1,languageCodes: "af-ZA"
   },
   {
       "name": "am-ET-Standard-A",
       "gender": "FEMALE",
-      id: 2,
+      id: 2,languageCodes: "am-ET"
   },
   {
       "name": "am-ET-Standard-B",
       "gender": "MALE",
-      id: 3
+      id: 3,languageCodes: "am-ET"
   },
   {
       "name": "am-ET-Wavenet-A",
       "gender": "FEMALE",
-      id:4
+      id:4,languageCodes: "am-ET"
   },
   {
       "name": "am-ET-Wavenet-B",
       "gender": "MALE",
-      id: 5
+      id: 5,languageCodes: "am-ET"
   }
 ]
 

@@ -21,8 +21,8 @@ import CustomSelect from "@/components/custom-select";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import GeneratePodcastAudio from "@/components/generate-podcast-audio";
-import GeneratePodcastThumbnail from "@/components/generate-podcast-thumbnail";
-import useGenerateAudio from "@/hooks/generate-audio";
+import PodcastThumbnail from "@/components/podcast-thumbnail";
+import {generateSpeech} from "@/lib/utils"
 
 const formSchema = z.object({
   podcastTitle: z.string().min(2, {
@@ -58,47 +58,10 @@ const CreatePodcast = () => {
   const inputPromptWatcher = form.watch("audioDetails");
   useEffect(() => {
     // console.log("inside the useffect", voiceTypeWatcher, inputPromptWatcher);
-    async function hello() {
-      // Your API key here
-      const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
-      // Make sure the API key is defined
-      if (!apiKey) {
-        console.error("API key is missing.");
-        return;
-      }
-
-      try {
-        // Make a fetch request with the API key as a query parameter
-        const response = await fetch(`https://texttospeech.googleapis.com/v1/voices?key=${apiKey}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
-
-        // Check if the response is okay (status 200-299)
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        // Parse the JSON response
-        const data = await response.json();
-
-
-
-
-
-
-        
-      } catch (error) {
-        
-        console.error("There was an error fetching the voices:", error);
-      }
-    }
 
     // Call the function
-    hello();
+    
     
     
   }, []);
@@ -201,7 +164,7 @@ const CreatePodcast = () => {
                 className="text-16 self-start bg-orange-1 py-4 font-extrabold text-white-1 transition-all duration-500 hover:bg-black-1"
               onClick={async()=>{
                 
-              const audio = await useGenerateAudio(inputPromptWatcher)
+              const audio = await generateSpeech(inputPromptWatcher,voiceTypeWatcher)
 const audioPlay = new Audio(audio);
                 audioPlay.play()
               }}
@@ -218,7 +181,7 @@ const audioPlay = new Audio(audio);
               </Button>
             </div>
 
-            <GeneratePodcastThumbnail />
+            <PodcastThumbnail />
             <Button
               disabled={isSubmitting}
               className="text-16 w-full  bg-orange-1 py-4 font-extrabold text-white-1 transition-all duration-500 hover:bg-black-1"

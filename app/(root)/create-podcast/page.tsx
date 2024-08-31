@@ -31,6 +31,7 @@ const formSchema = z.object({
   voiceType: z.string(),
   podcastDescription: z.string(),
   audioDetails: z.string(),
+  podcastThumnail: z.string()
 });
 
 const CreatePodcast = () => {
@@ -41,6 +42,7 @@ const CreatePodcast = () => {
       voiceType: "",
       podcastDescription: "",
       audioDetails: "",
+      podcastThumnail:""
     },
   });
 
@@ -162,15 +164,16 @@ const CreatePodcast = () => {
               <Button
                 disabled={disableGenerateButton}
                 className="text-16 self-start bg-orange-1 py-4 font-extrabold text-white-1 transition-all duration-500 hover:bg-black-1"
-              onClick={async()=>{
-                
-              const audio = await generateSpeech(inputPromptWatcher,voiceTypeWatcher)
-const audioPlay = new Audio(audio);
-                audioPlay.play()
-              }}
+                onClick={async () => {
+                  const audio = await generateSpeech(
+                    inputPromptWatcher,
+                    voiceTypeWatcher
+                  );
+                  const audioPlay = new Audio(audio);
+                  audioPlay.play();
+                }}
               >
                 {isSubmitting ? (
-                  
                   <>
                     Generating Audio...
                     <Loader2 className="animate-spin ml-2" />
@@ -179,12 +182,27 @@ const audioPlay = new Audio(audio);
                   "Generate Audio"
                 )}
               </Button>
+              <FormField
+                control={form.control}
+                name="podcastThumnail"
+                render={({ field }) => (
+                  <FormItem className="gap-2.5">
+                    <FormLabel className="text-16 text-white-1 font-bold">
+                      Podcast Thumnail
+                    </FormLabel>
+                    <FormControl>
+                      <PodcastThumbnail />
+                    </FormControl>
+
+                    <FormMessage className="text-white-1" />
+                  </FormItem>
+                )}
+              />
             </div>
 
-            <PodcastThumbnail />
             <Button
               disabled={isSubmitting}
-              className="text-16 w-full  bg-orange-1 py-4 font-extrabold text-white-1 transition-all duration-500 hover:bg-black-1"
+              className="text-16 w-full mt-16 bg-orange-1 py-4 font-extrabold text-white-1 transition-all duration-500 hover:bg-black-1"
               type="submit"
             >
               {isSubmitting ? (

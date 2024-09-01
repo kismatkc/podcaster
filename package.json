@@ -20,6 +20,7 @@
     "next": "14.2.5",
     "npm": "^10.8.3",
     "openai": "^4.56.0",
+    "podcast-api": "^2.0.4",
     "react": "^18",
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
@@ -27,6 +28,7 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "unrealspeech": "^1.8.6",
+    "xml2js": "^0.6.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -34,6 +36,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-dropzone": "^5.1.0",
+    "@types/xml2js": "^0.4.14",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",

@@ -10,6 +10,8 @@ const PodcastThumbnail = () => {
   const [imageUrl, setImageUrl] = useState("");
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const image = acceptedFiles[0];
+    console.log(image);
+    
     const url = URL.createObjectURL(image);
     setImageUrl(url);
   }, []);
@@ -25,10 +27,8 @@ const PodcastThumbnail = () => {
     });
   return (
     <div className="flex flex-col gap-2.5">
-      <Button className="text-white-1 bg-orange-1">
-        Create thumnail using Ai
-      </Button>
-      <span className="text-white-1 text-center">OR</span>
+
+
       <div
         {...getRootProps()}
         className={cn(
@@ -79,24 +79,13 @@ const PodcastThumbnail = () => {
           </div>
         </div>
       </div>
-      <div className="relative ">
-        {/* {imageUrl && (
-          <Image
-            src={imageUrl}
-            alt="podcast image"
-            className="w-[300px] h-[300px]"
-            objectFit="contain"
-          />
-        )} */}
+      <div className="flex w-full justify-center ">
         {imageUrl && (
-          <div style={{ width: 300, height: 300, position: 'relative' }}>
-    <Image
-      src={imageUrl}
-      alt="podcast image"
-      layout="fill" // Use 'fill' to make it occupy the parent container dimensions
-      objectFit="contain" // Ensures the image scales down to fit within the container
-    />
-  </div>
+          <img
+            src={imageUrl}
+            alt="Podcast thumnail"
+            className="w-[400px] h-[400px] object-contain "
+          />
         )}
       </div>
     </div>

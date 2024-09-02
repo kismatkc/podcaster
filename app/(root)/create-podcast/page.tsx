@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import {voiceDetails} from "@/constants/index";
+import { voiceDetails } from "@/constants/index";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,7 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import GeneratePodcastAudio from "@/components/generate-podcast-audio";
 import PodcastThumbnail from "@/components/podcast-thumbnail";
-import {generateSpeech} from "@/lib/utils"
+import { API, } from "@/lib/utils";
 
 const formSchema = z.object({
   podcastTitle: z.string().min(2, {
@@ -31,7 +31,7 @@ const formSchema = z.object({
   voiceType: z.string(),
   podcastDescription: z.string(),
   audioDetails: z.string(),
-  podcastThumnail: z.string()
+  podcastThumnail: z.string(),
 });
 
 const CreatePodcast = () => {
@@ -42,7 +42,7 @@ const CreatePodcast = () => {
       voiceType: "",
       podcastDescription: "",
       audioDetails: "",
-      podcastThumnail:""
+      podcastThumnail: "",
     },
   });
 
@@ -51,7 +51,7 @@ const CreatePodcast = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsSubmitting(true);
-  
+
     setIsSubmitting(false);
   }
 
@@ -60,15 +60,9 @@ const CreatePodcast = () => {
   const inputPromptWatcher = form.watch("audioDetails");
   useEffect(() => {
     // console.log("inside the useffect", voiceTypeWatcher, inputPromptWatcher);
-
-
     // Call the function
-    
-    
-    
   }, []);
   const disableGenerateButton = !(voiceTypeWatcher && inputPromptWatcher);
-
 
   return (
     <div className="flex flex-col mt-10">
@@ -165,12 +159,21 @@ const CreatePodcast = () => {
                 disabled={disableGenerateButton}
                 className="text-16 self-start bg-orange-1 py-4 font-extrabold text-white-1 transition-all duration-500 hover:bg-black-1"
                 onClick={async () => {
-                  const audio = await generateSpeech(
-                    inputPromptWatcher,
-                    voiceTypeWatcher
-                  );
-                  const audioPlay = new Audio(audio);
-                  audioPlay.play();
+                const response: any=await API.get("/generate_audio",{
+                    params: {prompt: inputPromptWatcher,voice: voiceTypeWatcher},
+                    responseType: 'arraybuffer',
+                  });
+                
+                  
+                  const audioBlob = new Blob([response.data], { type: 'audio/mpeg' });
+
+                  // Create a URL for the Blob to use in the audio element
+                  const url = URL.createObjectURL(audioBlob);
+            
+                  const audio = new Audio(url);
+                  audio.play();
+                
+                  
                 }}
               >
                 {isSubmitting ? (

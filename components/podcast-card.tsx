@@ -6,6 +6,7 @@ type PodcastDetailsProps ={
   podcastId: number;
   imgURL: string;
 }
+//console
 
 const PodcastDetails = ({title,description,podcastId,imgURL}: PodcastDetailsProps) => {
   return (

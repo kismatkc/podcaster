@@ -15,7 +15,6 @@ const PORT = process.env.port; // Corrected environment variable
 if (!PORT) {
   throw new Error("Please provide a valid port");
 }
-
 app.use("/podcaster/backend", generateAudioRoute);
 app.use("/podcaster/backend", getBestPodcasts);
 

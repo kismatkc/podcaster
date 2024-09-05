@@ -1,14 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
-type PodcastDetailsProps ={
+type TopFourPodcastCardProps ={
   title: string;
-  description: string;
-  podcastId: number;
+author: string
   imgURL: string;
 }
 //console
 
-const PodcastDetails = ({title,description,podcastId,imgURL}: PodcastDetailsProps) => {
+const TopFourPodcastCard = ({title,author,imgURL}: TopFourPodcastCardProps) => {
   return (
     <div className='cursor-pointer'>
     <figure>
@@ -16,11 +15,11 @@ const PodcastDetails = ({title,description,podcastId,imgURL}: PodcastDetailsProp
     </figure>
       <figcaption>
       <h1 className="text-16 truncate font-bold text-white-1">{title}</h1>
-        <h2 className="truncate capitalize text-12 text-white-4">{description}</h2>
+        <h2 className="truncate capitalize text-12 text-white-4">{author}</h2>
       </figcaption>
     
     </div>
   )
 }
 
-export default PodcastDetails
+export default TopFourPodcastCard

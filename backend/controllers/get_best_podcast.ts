@@ -3,42 +3,62 @@
 import { Request, Response } from "express";
 import { Client } from "podcast-api";
 import { parseString } from "xml2js";
+import axios from "axios";
+// const client = Client({ apiKey: process.env.LISTENNOTES_API_Key });
+const getTrendingPodcast =async (req: Request, res: Response) => {
+  
+let data = {}
+axios({
+  method: 'get',
+  url: "https://storage.googleapis.com/podcastemodata/hello.txt", // Replace with your URL
+  responseType: 'stream'
+})
+.then(response => {
+  let rawData = ''; // To accumulate chunks
 
-const client = Client({ apiKey: process.env.LISTENNOTES_API_Key });
-const getTrendingPodcast = (req: Request, res: Response) => {
-  client
-    .fetchBestPodcasts({
-      genre_id: "93",
-      page: 2,
-      region: "us",
-      sort: "listen_score",
-      safe_mode: 0,
-    })
-    .then((response) => {
-      const bestPodcasts = response.data.podcasts;
-      const podcastXmlData = bestPodcasts.map(async ({ rss }) => {
-        const response = await fetch(rss);
-        const podcastXml = await response.data;
-        // let author = "",
-        //   title = "",
-        //   image = "";
-        // parseString(podcastXml, (err, res) => {
-        //   const relevantDetails = res.rss.channel;
-        //   const author = relevantDetails[0]["itunes:author"][0];
-        //   const title = relevantDetails[0].title[0];
-        //   const image = relevantDetails[0].image[0].url[0];
-        //   author = author;
-        //   title = title;
-        //   image = image;
-        // });
-        console.log(podcastXml);
-      });
+  response.data.on('data', (chunk: any) => {
+    rawData += chunk; // Append each chunk of data to rawData
+  });
 
-      res.json(podcastXmlData);
-    })
-    .catch((error) => {
-      res.json(error);
-    });
+  response.data.on('end', () => {
+    try {
+      const jsonObject = JSON.parse(rawData); // Convert the complete data to JSON
+      data = jsonObject;
+      console.log(data)
+      
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
+    }
+  });
+
+})
+.catch(error => {
+  console.error('Error fetching stream:', error);
+});
+
+  
+
+   
+  // client
+  //   .fetchBestPodcasts({
+  //     genre_id: "93",
+  //     page: 2,
+  //     region: "us",
+  //     sort: "listen_score",
+  //     safe_mode: 0,
+  //   })
+  //   .then((response) => {
+  //     const bestPodcasts = response.data.podcasts;
+      
+  //     res.json(podcastXmlData);
+  //   })
+  //   .catch((error) => {
+  //     res.json(error);
+  //   });
+
+  
+  res.send(data);
+  return data;
 };
 
 export default getTrendingPodcast;

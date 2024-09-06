@@ -1,50 +1,57 @@
-"use client"
+"use client";
 
 import React, { useEffect } from "react";
 import PodcastDetails from "@/components/podcast-card";
-import axios from "axios"
+import axios from "axios";
 import { API } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import test from "node:test";
+import Error from "./enableOnProductionerror";
+type podcastCardProps = {
+  title: string;
+  author: string;
+  imgURL: string;
+  views: string;
+};
 const getBestPodcasts = async () => {
-  const data = await API.get("/best_podcasts");
+  const response = await API.get("/best_podcasts");
+  const data: podcastCardProps[] = response.data;
+  const validData = data.filter((podcast: podcastCardProps) => podcast != null);
 
-  console.log(data)
-
-
-  return data;
+  return validData;
 };
 
-const podcastData = [
-  {
-   imgURL: "https://megaphone.imgix.net/podcasts/0d8f9f54-48cd-11ee-ab9b-c7fa92fe264e/image/doac-yt-logo.jpg?ixlib=rails-4.3.1&max-w=3000&max-h=3000&fit=crop&auto=format,compress",
-   title: "The Diary Of A CEO with Steven Bartlett ",
-   author: "DOAC" ,
-   duration:7993,
-   views: 71101
-  }
-]
 const Home = () => {
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading } = useQuery<podcastCardProps[]>({
     queryKey: ["bestPodcasts"],
-    queryFn: getBestPodcasts
+    queryFn: getBestPodcasts,
   });
-  useEffect(() => {
-    
-  }, [data])
 
+  if (isLoading)
+    return (
+      <div className="flex h-screen items-center justify-center text-white-1">
+        <Loader2 size={35} className="animate-spin" />
+      </div>
+    );
+  if (error) {
+    return <Error error={error} />;
+  }
   return (
     <div className="">
-      <h1 className="text-20 font-bold text-white-1">Top four podcasts of the week</h1>
+      <h1 className="text-20 font-bold text-white-1">
+        Top four podcasts of the week
+      </h1>
       <div className="podcast_grid">
-        {podcastData.map(({ title, author, imgURL, views }) => (
-          <PodcastDetails
-            key={views}
-            title={title}
-            author={author}
-            imgURL={imgURL}
-           
-          />
-        ))}
+        {data &&
+          data.map(({ title, author, imgURL, views }) => (
+            <PodcastDetails
+              key={views}
+              title={title}
+              author={author}
+              imgURL={imgURL}
+            />
+          ))}
       </div>
     </div>
   );

@@ -22,6 +22,7 @@ function podcastCard(xmlData: any) {
     author: podcastAuthor,
     imgURL: podcastImage,
     views: podcastViews,
+    duration: podcastDuration
   };
 }
 // const client = Client({ apiKey: process.env.LISTENNOTES_API_Key });

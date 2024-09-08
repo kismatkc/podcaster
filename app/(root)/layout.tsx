@@ -25,7 +25,7 @@ export default function RootLayout({
               />
               <MobileNav />
             </div>
-            <div className="flex flex-col md:pb-14">
+            <div className="flex flex-col h-full">
               {/* The reason to keep this toaster and the children together is becuase each toaster belong to a specfic children.For eg profile page has lage related toaster and createlodcast has create podcast realted poster so it makes sense */}
               {/* toaster */}
               {children}

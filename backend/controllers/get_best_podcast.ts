@@ -27,6 +27,9 @@ function podcastCard(xmlData: any) {
 }
 // const client = Client({ apiKey: process.env.LISTENNOTES_API_Key });
 const getTrendingPodcast = async (req: Request, res: Response) => {
+
+
+
   axios({
     method: "get",
     url: "https://storage.googleapis.com/podcastemodata/hello.txt", // Replace with your URL

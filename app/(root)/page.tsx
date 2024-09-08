@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import Error from "./enableOnProductionerror";
 import Link from "next/link";
-import LatestPodcastIndividualRow from "@/components/latest-podcast";
+import LatestPodcastIndividualRow from "@/components/latest-podcast-row";
 type podcastCardProps = {
   title: string;
   author: string;
@@ -19,8 +19,9 @@ type podcastCardProps = {
 const getBestPodcasts = async () => {
   const response = await API.get("/best_podcasts");
   const data: podcastCardProps[] = response.data;
+ 
   const validData = data.filter((podcast: podcastCardProps) => podcast != null);
-
+  console.log(validData.length);
   return validData;
 };
 
@@ -45,9 +46,9 @@ const Home = () => {
     return <Error error={error} />;
   }
   return (
-    <div className="flex-col gap-3">
-      <div>
-        <h1 className="text-20 font-bold text-white-1 mb-2">
+    <div className="flex-col h-screen  w-full justify-between   ">
+      <div className="flex-col ">
+        <h1 className="text-20 font-bold text-white-1 mb-2 ">
           Trending podcast
         </h1>
         <div className="podcast_grid">
@@ -62,16 +63,17 @@ const Home = () => {
             ))}
         </div>
       </div>
-      <div className="flex-col">
+      <div className="flex-col  mt-16">
         <div className="flex justify-between">
           <h1 className="text-white-1">Latest Podcast</h1>
           <Link href="" className="text-orange-1">
             See all
           </Link>
         </div>
-        <div className="flex-col">
+        <div className="flex-col justify-between h-full">
           {latestPodcast?.map(({ imgURL, author, views, duration }, index) => (
             <LatestPodcastIndividualRow
+              key={views}
               index={index}
               imgURL={imgURL}
               author={author}
@@ -81,7 +83,7 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <div>
+      <div className="flex-col   mt-16">
         <h1 className="text-20 font-bold text-white-1 mb-2">Best podcast</h1>
         <div className="podcast_grid">
           {bestPodcast &&
